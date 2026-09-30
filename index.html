@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset=UTF-8>
+  <meta name=viewport content=width=device-width, initial-scale=1.0>
+  <title>Expense & Budget Visualizer</title>
+  <link rel=stylesheet href=css/style.css>
+  <!-- Chart.js CDN -->
+  <script src=https://cdn.jsdelivr.net/npm/chart.js></script>
+</head>
+<body>
+  <div class=app-container>
+    <!-- Header with Title & Dark Mode Toggle -->
+    <header class=app-header>
+      <h1 class=app-title>Expense & Budget Visualizer</h1>
+      <button id=themeToggleBtn class=btn-theme type=button aria-label=Toggle dark mode>
+        <span id=themeIcon>🌙</span>
+      </button>
+    </header>
+
+    <!-- Total Balance Card -->
+    <section class=card balance-card>
+      <span class=card-subtitle>TOTAL BALANCE</span>
+      <div id=totalBalance class=balance-amount>bash.00</div>
+      <div id=budgetAlert class=budget-alert hidden>
+        ⚠️ Warning: Total expenses exceeded budget limit (00.00)!
+      </div>
+    </section>
+
+    <!-- Add Transaction Form -->
+    <section class=card form-card>
+      <h2 class=card-title>Add Transaction</h2>
+      <form id=transactionForm novalidate>
+        <div class=form-group>
+          <label for=itemName>Item Name</label>
+          <input type=text id=itemName name=itemName placeholder=e.g. Cilok, Bus ticket required>
+          <span class=error-msg id=nameError></span>
+        </div>
+
+        <div class=form-group>
+          <label for=itemAmount>Amount</label>
+          <input type=number id=itemAmount name=itemAmount step=0.01 min=0.01 placeholder=0.00 required>
+          <span class=error-msg id=amountError></span>
+        </div>
+
+        <div class=form-group>
+          <label for=itemCategory>Category</label>
+          <select id=itemCategory name=itemCategory required>
+            <option value= disabled selected>Select category</option>
+            <option value=Food>Food</option>
+            <option value=Transport>Transport</option>
+            <option value=Fun>Fun</option>
+          </select>
+          <span class=error-msg id=categoryError></span>
+        </div>
+
+        <button type=submit id=addBtn class=btn btn-primary>Add Transaction</button>
+      </form>
+    </section>
+
+    <!-- Bottom Content Grid: Transactions & Visual Chart -->
+    <div class=content-grid>
+      <!-- Left Column: Transactions List -->
+      <section class=card transactions-card>
+        <div class=transactions-header>
+          <h2 class=card-title>Transactions</h2>
+          <div class=sort-wrapper>
+            <label for=sortSelect class=sr-only>Sort By</label>
+            <select id=sortSelect class=sort-select>
+              <option value=newest>Sort: Newest</option>
+              <option value=amount-high>Amount: High → Low</option>
+              <option value=amount-low>Amount: Low → High</option>
+              <option value=category>By Category</option>
+            </select>
+          </div>
+        </div>
+
+        <div id=transactionsList class=transactions-list>
+          <!-- Populated by JavaScript -->
+          <div class=empty-state id=emptyState>No transactions added yet.</div>
+        </div>
+      </section>
+
+      <!-- Right Column: Chart -->
+      <section class=card chart-card>
+        <h2 class=card-title>Spending by Category</h2>
+        <div class=chart-wrapper>
+          <canvas id=spendingChart></canvas>
+        </div>
+        <div id=chartEmptyMessage class=chart-empty>No spending data to visualize</div>
+      </section>
+    </div>
+  </div>
+
+  <script src=js/app.js></script>
+</body>
+</html>
